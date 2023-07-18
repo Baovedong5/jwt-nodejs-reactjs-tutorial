@@ -4,8 +4,6 @@ const router = express.Router();
 
 router.get("/", homeController.handleHelloWorld);
 
-router.get("/about", (req, res) => {
-  return res.send("Phuongdz");
-});
+router.get("/user", homeController.handleUser);
 
 export default router;
