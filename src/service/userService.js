@@ -18,29 +18,36 @@ const createNewUser = async (email, password, username) => {
 };
 
 const getUserList = async () => {
-  const [results, fields] = await connection.query("SELECT * FROM users");
-  return results;
+  let users = [];
+  users = await db.User.findAll();
+  return users;
 };
 
 const deleteUser = async (id) => {
-  const [results, fields] = await connection.query(
-    `Delete from users Where id=?`,
-    [id]
-  );
+  await db.User.destroy({
+    where: { id },
+  });
 };
 
 const getUserById = async (id) => {
-  const [results, fields] = await connection.query(
-    `Select * from users Where id=?`,
-    [id]
-  );
-  return results;
+  let user = {};
+  user = await db.User.findOne({
+    where: { id },
+  });
+  return user.get({ plain: true });
 };
 
 const updateUserInfor = async (email, username, id) => {
-  const [results, fields] = await connection.query(
-    `Update users Set email=?,username=? Where id=?`,
-    [email, username, id]
+  await db.User.update(
+    {
+      email: email,
+      username: username,
+    },
+    {
+      where: {
+        id: id,
+      },
+    }
   );
 };
 
