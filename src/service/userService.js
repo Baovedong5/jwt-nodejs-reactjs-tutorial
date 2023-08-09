@@ -17,12 +17,8 @@ const createNewUser = async (email, password, username) => {
 };
 
 const getUserList = async () => {
-  try {
-    const [results, fields] = await connection.query("SELECT * FROM users");
-    return results;
-  } catch (error) {
-    console.log(error);
-  }
+  const [results, fields] = await connection.query("SELECT * FROM users");
+  return results;
 };
 
 const deleteUser = async (id) => {
@@ -32,4 +28,25 @@ const deleteUser = async (id) => {
   );
 };
 
-module.exports = { createNewUser, getUserList, deleteUser };
+const getUserById = async (id) => {
+  const [results, fields] = await connection.query(
+    `Select * from users Where id=?`,
+    [id]
+  );
+  return results;
+};
+
+const updateUserInfor = async (email, username, id) => {
+  const [results, fields] = await connection.query(
+    `Update users Set email=?,username=? Where id=?`,
+    [email, username, id]
+  );
+};
+
+module.exports = {
+  createNewUser,
+  getUserList,
+  deleteUser,
+  getUserById,
+  updateUserInfor,
+};

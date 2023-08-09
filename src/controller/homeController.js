@@ -1,4 +1,10 @@
-import { createNewUser, getUserList, deleteUser } from "../service/userService";
+import {
+  createNewUser,
+  getUserList,
+  deleteUser,
+  getUserById,
+  updateUserInfor,
+} from "../service/userService";
 
 const handleHelloWorld = (req, res) => {
   return res.render("home.ejs");
@@ -6,7 +12,6 @@ const handleHelloWorld = (req, res) => {
 
 const handleUser = async (req, res) => {
   let userList = await getUserList();
-  await deleteUser(5);
   return res.render("user.ejs", { userList });
 };
 
@@ -25,9 +30,32 @@ const handleDeleteUser = async (req, res) => {
   return res.redirect("/user");
 };
 
+const getUpdateUserPage = async (req, res) => {
+  let id = req.params.id;
+  let user = await getUserById(id);
+  let userData = {};
+  if (user && user.length > 0) {
+    userData = user[0];
+  }
+
+  return res.render("user-update.ejs", { userData });
+};
+
+const handleUpdateUser = async (req, res) => {
+  let email = req.body.email;
+  let username = req.body.username;
+  let id = req.body.id;
+
+  await updateUserInfor(email, username, id);
+
+  return res.redirect("/user");
+};
+
 module.exports = {
   handleHelloWorld,
   handleUser,
   handleCreateNewUser,
   handleDeleteUser,
+  getUpdateUserPage,
+  handleUpdateUser,
 };
