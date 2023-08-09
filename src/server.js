@@ -3,6 +3,7 @@ import configViewEngine from "./config/viewEngine";
 import router from "./routers/web";
 require("dotenv").config();
 import bodyParser from "body-parser";
+// import connection from "./config/conenectDB";
 
 const app = express();
 
@@ -14,6 +15,9 @@ configViewEngine(app);
 //config body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//test connection db
+// connection();
 
 //init Web Router
 app.use("/", router);
