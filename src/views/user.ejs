@@ -12,10 +12,10 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="user-info-container">
-      <form method="POST" action="/users/create-user">
-        <div class="container">
-          <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="user-info-container">
+          <form method="POST" action="/users/create-user">
             <div class="pt-3">
               <h3>Create a new user:</h3>
             </div>
@@ -54,9 +54,41 @@
             <div class="col-12">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
+        <div class="table-user mt-3">
+          <h3>Table users</h3>
+          <table class="table table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Username</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% userList.forEach(function(user) { %>
+              <tr>
+                <td scope="col"><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td><%= user.username %></td>
+                <td>
+                  <button class="btn btn-warning">Edit</button>
+                  <form
+                    action="/delete-user/<%=user.id %>"
+                    method="POST"
+                    style="display: inline"
+                  >
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </body>
 </html>
