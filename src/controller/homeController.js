@@ -15,12 +15,12 @@ const handleUser = async (req, res) => {
   return res.render("user.ejs", { userList });
 };
 
-const handleCreateNewUser = (req, res) => {
+const handleCreateNewUser = async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let username = req.body.username;
 
-  createNewUser(email, password, username);
+  await createNewUser(email, password, username);
 
   return res.redirect("/user");
 };
